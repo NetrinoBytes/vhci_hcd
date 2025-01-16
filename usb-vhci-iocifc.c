@@ -207,7 +207,7 @@ static int ioc_register(struct file *file, struct usb_vhci_ioc_register __user *
 	file->private_data = vdev;
 
 	// copy id to user space
-	__put_user(usb_vhci_dev_id(vdev), &arg->id);
+	put_user(usb_vhci_dev_id(vdev), &arg->id);
 
 	// copy bus-id to user space
 	dname = usb_vhci_dev_name(vdev);
@@ -216,15 +216,15 @@ static int ioc_register(struct file *file, struct usb_vhci_ioc_register __user *
 	if(copy_to_user(arg->bus_id, dname, i))
 	{
 		vhci_printk(KERN_WARNING, "Failed to copy bus_id to userspace.\n");
-//		__put_user('\0', arg->bus_id);
-		__put_user('\0', arg->bus_id + 0);
+//		('\0', arg->bus_id);
+		put_user('\0', arg->bus_id + 0);
 	}
 	// make sure the last character is null
-	__put_user('\0', arg->bus_id + i);
+	put_user('\0', arg->bus_id + i);
 
 	usbbusnum = usb_vhci_dev_busnum(vdev);
 	vhci_printk(KERN_INFO, "Usb bus #%d\n", usbbusnum);
-	__put_user(usbbusnum, &arg->usb_busnum);
+	put_user(usbbusnum, &arg->usb_busnum);
 
 	return 0;
 }
