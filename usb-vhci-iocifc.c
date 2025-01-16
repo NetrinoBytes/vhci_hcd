@@ -160,7 +160,7 @@ static void trigger_work_event(struct usb_vhci_device *vdev)
 
 static struct usb_vhci_ifc vhci_ioc_ifc = {
 	.ifc_desc      = "USB VHCI user-mode IOCTL-interface",
-	.owner         = THIS_MODULE,
+//	.owner         = THIS_MODULE,
 	.ifc_priv_size = sizeof(struct vhci_ifc_priv),
 
 #ifdef DEBUG
@@ -1012,7 +1012,7 @@ static loff_t device_llseek(struct file *file, loff_t offset, int origin)
 }
 
 static struct file_operations fops = {
-	.owner          = THIS_MODULE,
+//	.owner          = THIS_MODULE,
 	.llseek         = device_llseek,
 	.read           = device_read,
 	.write          = device_write,
@@ -1058,8 +1058,8 @@ static DRIVER_ATTR_RW(debug_output);
 
 static struct platform_driver vhci_iocifc_driver = {
 	.driver = {
-		.name   = driver_name,
-		.owner  = THIS_MODULE
+		.name   = driver_name
+//		.owner  = THIS_MODULE
 	}
 };
 
@@ -1070,7 +1070,7 @@ static void vhci_iocifc_device_release(struct device *dev)
 static int vhci_iocifc_major;
 
 static struct class vhci_iocifc_class = {
-	.owner = THIS_MODULE,
+//	.owner = THIS_MODULE,
 	.name = driver_name
 };
 
